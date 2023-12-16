@@ -40,6 +40,8 @@ conn.commit()
 
 cursor.execute('''SELECT * FROM puestoin , quiz_content WHERE question.id == puiz_conntent.puestion_id 
                AND quiz_content.quiz_id == ?''' , [1])
+conn.commit()
+
 
 
 
