@@ -1,7 +1,9 @@
+import sqlite3
+
 
 def get_question(quiz_id, question_id):
-    connn = sqlite3.connect("quiz.splite")
-    cursor = conn.cursor
+    conn = sqlite3.connect("quiz.splite")
+    cursor = conn.cursor()
 
     cursor.execute('''SELECT question.qestion, FROM question , quiz_content
                    WHERE quiz_content.question_id == question.id == question.id

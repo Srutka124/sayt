@@ -1,15 +1,14 @@
 from flask import Flask , session
 from random import randint
 from puiz_sql import get_question
-
+import main_2
 def index():
-    session['counter'] = 0
-    session['counter'] = randint(1,2)
+    session['counter'] = randint(0,1)
+    session['counter2'] = randint(0,1)
     return '<a href="/test" >start Test</a>'
 
 def test():
-    data = get_question(session['counter'] , session['counter'])
-    session['counter']
+    data = get_question( session['counter'],session['counter'])
     return f"<h1>{session['counter']}</h1>"
 def result ():
     return''
