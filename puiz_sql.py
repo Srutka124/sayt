@@ -13,9 +13,23 @@ def get_question(quiz_id, question_id):
     return data
 def get_quises():
     query = 'SELECT * FROM quiz ORDER BY id'
-    conn = sqlite3.connect(main_2)
+    conn = sqlite3.connect('db_name')
     cursor = conn.cursor()
     cursor.execute(query)
     result = cursor.fetchall()
-
-    return result
+def check_answer(quest_id, answer):
+    query = '''
+        SELECT question.answer FROM quiz_content, question WHERE quiz_content.id = ? 
+        AND quiz_content.question_id = question.id
+    '''
+    open()
+    cursor.execute(query, str(quest_id))
+    result = cursor.fetchone()
+    close()
+    if result is None:
+        return False
+    else:
+        if result[0] == answer:
+            return True
+        else:
+            return False

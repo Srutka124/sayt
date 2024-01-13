@@ -7,14 +7,14 @@
     <link rel = "stylesheet" href="{{url_for('static' , filename = 'style.css')}}">
 </head>
 <body>
-    <form method="post" action="/index">
+    <form method="post" action="/test" >
         <h2>Test</h2>
         <h3>{{question}}</h3>
-        <form action="post">
+        <input value="{{question_id}}" name="question_id"  tupe = "hidden"/>
             {% fof ans in answers %}
-            <p><imput type = "radio" value = "{{ans}}" name="quiz">{{ans}}</p>
+                <p><imput type = "radio" value = "{{ans}}" name="quiz">{{ans}}</p>
             {%endfor%}
-            <button type>
+            <button>Відповісти</button>
         </form>    
     </form>
 </body>
