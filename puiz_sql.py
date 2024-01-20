@@ -1,5 +1,5 @@
 import sqlite3
-
+from random import randint
 db_name = 'quiz.sqlite'
 conn = None
 cursor = None
@@ -44,7 +44,9 @@ def create_tables():
                 answer VARCHAR, 
                 wrong1 VARCHAR, 
                 wrong2 VARCHAR, 
-                wrong3 VARCHAR)'''
+                wrong3 VARCHAR,
+                wrong4 VARCHAR)
+                  '''
     )
 
     execute_query('''CREATE TABLE IF NOT EXISTS quiz_content (
@@ -73,16 +75,14 @@ def show_tables():
 
 def add_questions():
     questions = [
-        ('Скільки місяців на рік мають 28 днів?', 'Всі', 'Один', 'Ні одного', 'Два'),
-        ('Яким стане зелена скеля, якщо впаде в Червоне море?', 'Мокрою?', 'Червоною', 'Не зміниться', 'Фіолетовою'),
-        ('Якою рукою краще розмішувати чай?', 'Ложкою', 'Правою', 'Лівою', 'Будь-якою'),
-        ('Що не має довжини, глибини, ширини, висоти, а чи можна виміряти?', 'Час', 'Безглуздість', 'Море', 'Повітря'),
-        ('Коли мережею можна витягти воду?', 'Коли вода замерзла', 'Коли немає риби', 'Коли спливла золота рибка', 'Коли мережа порвалася'),
-        ('Що більше за слона і нічого не важить?', 'Тінь слона', 'Повітряна куля', 'Парашут', 'Хмара'),
-        ('Що таке в кишені?', 'Кільце', 'Кулак', 'Дірка', 'Бублик')
+    ("Who is Einstein?", 'Physicist', 'Biologist', 'Geographer', 'Chemist', 'Astronomer'),
+    ("Who is Tesla?", 'Physicist', 'Inventor', 'Engineer', 'Mathematician', 'Physician'),
+    ("What is the capital of France?", 'Paris', 'Berlin', 'London', 'Rome', 'Madrid'),
+    ("Which planet is known as the Red Planet?", 'Mars', 'Venus', 'Jupiter', 'Saturn', 'Neptune'),
+    ("What is the powerhouse of the cell?", 'Mitochondria', 'Nucleus', 'Endoplasmic Reticulum', 'Ribosome', 'Golgi Apparatus')
     ]
     open_db()
-    cursor.executemany('''INSERT INTO question (question, answer, wrong1, wrong2, wrong3) VALUES (?,?,?,?,?)''', questions)
+    cursor.executemany('''INSERT INTO question (question, answer, wrong1, wrong2, wrong3, wrong4) VALUES (?,?,?,?,?,?)''', questions)
     conn.commit()
     close_db()
 
@@ -103,13 +103,13 @@ def add_links():
     open_db()
     cursor.execute('''PRAGMA foreign_keys=on''')
     query = "INSERT INTO quiz_content (quiz_id, question_id) VALUES (?,?)"
-    answer = input("Додати зв'язок (y / n)?")
-    while answer != 'n':
-        quiz_id = int(input("id вікторини: "))
-        question_id = int(input("id питання: "))
-        cursor.execute(query, [quiz_id, question_id])
+    
+    links=[[1,1], [1,2], [1,3], [1,4], [1,5]]
+
+    for i in links:
+        cursor.execute(query, [i[0], i[1]])
         conn.commit()
-        answer = input("Додати зв'язок (y / n)?")
+        
     close_db()
 
 
@@ -155,7 +155,23 @@ def get_random_quiz_id():
     rand_id = ids[rand_num][0]
     close_db()
     return rand_id
-
+def check_answer(quest_id, answer):
+    query = '''
+        SELECT question.answer FROM quiz_content, question WHERE quiz_content.id = ? 
+        AND quiz_content.question_id = question.id
+    '''
+    open()
+    cursor.execute(query, str(quest_id))
+    result = cursor.fetchone()
+    close_db()
+    if result is None:
+        return False
+    else:
+        if result[0] == answer:
+            return True
+        else:
+            return False
+        
 
 def main():
     clear_db()

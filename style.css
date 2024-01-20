@@ -40,16 +40,36 @@ main {
     font-family: "Lemon";
     text-align: center;
 }
+@keyframes anime {
+    0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+    
+}
+
+
 
 button {
     border: 0;
-    background: #332941;
+    background: rgb(107,34,195);
+    
+    background: linear-gradient(243deg, rgba(2,0,36,1) 5%, rgba(121,9,75,1) 29%, rgba(98,21,66,1) 33%, rgba(87,27,82,1) 35%, rgba(60,36,93,1) 38%, rgba(56,72,97,1) 42%, rgba(77,97,95,1) 48%, rgba(71,150,99,1) 62%, rgba(45,189,91,1) 76%, rgba(17,157,9,1) 89%, rgba(249,255,0,1) 100%);	
+    background-size: 400% 400%;
+	animation: anime 12s ease infinite;
+    
     color: #F8E559;
     padding: 10px 30px;
     border-radius: 5px;
-    transition-duration: 0.2s;
+    transition: all 0.5s ease;
     
 }
+
 button:hover {
     background: #792ce5;
     cursor:pointer;
@@ -79,5 +99,16 @@ footer {
 
 h2 {
     font-family:'Dancing+Script:wght@400;500 & display=swap'
+
+}
+result {
+    background-color: #089f8f;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 50px 90px;
+    border-radius: 20px;
 
 }

@@ -8,13 +8,20 @@
 </head>
 <body>
     <form method="post" action="/test" >
-        <h2>Test</h2>
-        <h3>{{question}}</h3>
-        <input value="{{question_id}}" name="question_id"  tupe = "hidden"/>
-            {% fof ans in answers %}
-                <p><imput type = "radio" value = "{{ans}}" name="quiz">{{ans}}</p>
-            {%endfor%}
-            <button>Відповісти</button>
+        <header class ='header'>
+            <h1 class = 'logo'>Quizz</h1>
+        </header>
+        <main>
+            <div class = "forma">
+                <h2>Test</h2>
+                <h3>{{question}}</h3>
+                <input value="{{question_id}}" name="q_id"  type="hidden"/>
+                    {% for ans in answers %}
+                        <p><input type = "radio" value = "{{ans}}" name="quiz">{{ans}}</p>
+                    {%endfor%}
+                    <button>Відповісти</button>
+            </div>
+        </main>
         </form>    
     </form>
 </body>

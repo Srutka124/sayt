@@ -151,7 +151,22 @@ def get_random_quiz_id():
     rand_id = ids[rand_num][0]
     close()
     return rand_id
-    
+def check_answer(quest_id, answer):
+    query = '''
+        SELECT question.answer FROM quiz_content, question WHERE quiz_content.id = ? 
+        AND quiz_content.question_id = question.id
+    '''
+    open()
+    cursor.execute(query, str(quest_id))
+    result = cursor.fetchone()
+    close()
+    if result is None:
+        return False
+    else:
+        if result[0] == answer:
+            return True
+        else:
+            return False
  
 def main():
     #clear_db()

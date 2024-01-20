@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel = "stylesheet" href="{{url_for('static' , filename = 'style.css')}}">
+</head>
+
+<body>
+    <form method="post" action="/index">
+        <header class="header">
+            <h1 class="logo">Quizz </h1>
+        </header>
+    
+        <div class = "result">
+            <h2>Ваш результат</h2>
+            {{right}}
+
+
+
+        </div>
+</body>
+</html>

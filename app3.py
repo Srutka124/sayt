@@ -1,6 +1,6 @@
 from flask import Flask, render_template , session , request,redirect ,url_for
 from random import shuffle
-from puiz_sql import get_question ,get_quises
+from puiz_sql import get_question_after ,get_quises,check_answer
 import main_2
 def index():
 
@@ -27,8 +27,15 @@ def test():
         session["question_id"]  = quest_id
         session['total'] += 1
 
-    question = get_question(session["question_id"],session["quiz_id"])
-    
+        if check_answer(quest_id , answer):
+            session['answer'] += 1
+    print(session["question_id"],session["quiz_id"])
+
+
+    question = get_question_after(session["question_id"],session["quiz_id"])
+    print(question)
+    if question is None :
+        return redirect(url_for('result'))
     
     answers  = [question[2] ,question[3] ,question[4] ,question[5]]
     shuffle(answers)
@@ -42,6 +49,7 @@ def result():
     return render_template("result.html",
                             right=session['answer'], 
                            total=session['total'])
+    
 app = Flask(__name__, template_folder='', static_folder='')
 app.config["SECRET_KEY"] = 'secret'
 app.add_url_rule("/", "index", index)
@@ -50,4 +58,4 @@ app.add_url_rule("/index", "index", index, methods=["POST", "GET"])
 app.add_url_rule("/test", "test", test, methods=["POST", "GET"])
 app.add_url_rule("/result", "result", result)
 
-app.run()
+app.run(debug=True)
