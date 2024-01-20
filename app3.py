@@ -1,8 +1,10 @@
 from flask import Flask, render_template , session , request,redirect ,url_for
 from random import shuffle
 from puiz_sql import get_question ,get_quises
-from main_2 import *
+import main_2
 def index():
+
+
     if request.method == 'GET':
 
         quizz = get_quises()
@@ -26,9 +28,12 @@ def test():
         session['total'] += 1
 
     question = get_question(session["question_id"],session["quiz_id"])
+    
+    
     answers  = [question[2] ,question[3] ,question[4] ,question[5]]
     shuffle(answers)
     return render_template('test.html' , question = question[1], answers = answers , question_id = question[0])
+    
 app = Flask(__name__, template_folder = '', static_folder= '')
 
 
