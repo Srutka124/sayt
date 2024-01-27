@@ -160,7 +160,7 @@ def check_answer(quest_id, answer):
         SELECT question.answer FROM quiz_content, question WHERE quiz_content.id = ? 
         AND quiz_content.question_id = question.id
     '''
-    open()
+    open_db()
     cursor.execute(query, str(quest_id))
     result = cursor.fetchone()
     close_db()
